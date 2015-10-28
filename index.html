@@ -7,25 +7,45 @@
 <webview id="webview" src="https://play.google.com/music/listen" preload="hook.js"></webview>
 
 <script>
-
 var ipc = require('ipc');
+window.$ = window.jQuery = require('jquery');
 
-var webview = document.querySelector('#webview');
+$(document).ready(function() {
+	var webview = document.querySelector('#webview');
 
-ipc.on('play-pause', function() {
-	webview.send('play-pause');
+	var url = localStorage.url;
+	if (url !== undefined) {
+		webview.src = url;
+	}
+
+	ipc.on('play-pause', function() {
+		webview.send('play-pause');
+	});
+
+	ipc.on('next-track', function() {
+		webview.send('next-track');
+	});
+
+	ipc.on('previous-track', function() {
+		webview.send('previous-track');
+	});
+
+	ipc.on('reload', function() {
+		webview.reload();
+	});
+
+	ipc.on('go-back', function() {
+		webview.goBack();
+	});
+
+	ipc.on('go-forward', function() {
+		webview.goForward();
+	});
+
+	ipc.on('close', function() {
+		var url = webview.getUrl();
+		localStorage.url = url;
+	});
 });
-
-ipc.on('next-track', function() {
-	webview.send('next-track');
-});
-
-ipc.on('previous-track', function() {
-	webview.send('previous-track');
-});
-
-ipc.on('reload', function() {
-	webview.reload();
-})
 
 </script>

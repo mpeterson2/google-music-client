@@ -7,7 +7,6 @@ var fs = require('fs');
 app.on('ready', function() {
 	var boundsPath = path.join(app.getDataPath() + '/bounds.json');
 	var bounds = getBounds();
-
 	var mainWindow = new BrowserWindow({
 		x: bounds.x,
 		y: bounds.y,
@@ -16,11 +15,13 @@ app.on('ready', function() {
 		'title-bar-style': 'hidden'
 	});
 
+	mainWindow.webContents.openDevTools();
 	mainWindow.loadUrl('file://' + __dirname + '/index.html');
 
 	mainWindow.on('close', function() {
 		var newBounds = mainWindow.getBounds();
 		fs.writeFileSync(boundsPath, JSON.stringify(newBounds));
+		mainWindow.webContents.send('close');
 		mainWindow = null;
 	});
 
@@ -36,8 +37,16 @@ app.on('ready', function() {
 		mainWindow.webContents.send('play-pause');
 	});
 
-	mainWindow.on('app-command', function(e, command) {
-		console.log(command);
+	registerLocalShortcut('CmdOrCtrl+R', mainWindow, function() {
+		mainWindow.webContents.send('reload');
+	});
+
+	registerLocalShortcut('CmdOrCtrl+Left', mainWindow, function() {
+		mainWindow.webContents.send('go-back');
+	});
+
+	registerLocalShortcut('CmdOrCtrl+Right', mainWindow, function() {
+		mainWindow.webContents.send('go-forward');
 	});
 
 	function getBounds() {
@@ -49,3 +58,13 @@ app.on('ready', function() {
 		}
 	}
 });
+
+function registerLocalShortcut(accelerator, window, callback) {
+	window.on('focus', function() {
+		globalShortcut.register(accelerator, callback);	
+	});
+
+	window.on('blur', function() {
+		globalShortcut.unregister(accelerator);
+	});
+}
