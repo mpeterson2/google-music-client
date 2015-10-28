@@ -1,0 +1,31 @@
+<style>
+	body {
+		margin: 0;
+	}
+</style>
+
+<webview id="webview" src="https://play.google.com/music/listen" preload="hook.js"></webview>
+
+<script>
+
+var ipc = require('ipc');
+
+var webview = document.querySelector('#webview');
+
+ipc.on('play-pause', function() {
+	webview.send('play-pause');
+});
+
+ipc.on('next-track', function() {
+	webview.send('next-track');
+});
+
+ipc.on('previous-track', function() {
+	webview.send('previous-track');
+});
+
+ipc.on('reload', function() {
+	webview.reload();
+})
+
+</script>

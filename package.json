@@ -1,0 +1,10 @@
+{
+  "name": "google-music",
+  "version": "0.0.1",
+  "main": "main.js",
+  "dependencies": {
+    "diskdb": "^0.1.14",
+    "jquery": "^2.1.4",
+    "node-localstorage": "^0.6.0"
+  }
+}
