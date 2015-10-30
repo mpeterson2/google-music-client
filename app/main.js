@@ -15,7 +15,6 @@ app.on('ready', function() {
 		'title-bar-style': 'hidden'
 	});
 
-	mainWindow.webContents.openDevTools();
 	mainWindow.loadUrl('file://' + __dirname + '/index.html');
 
 	mainWindow.on('close', function() {
