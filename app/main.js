@@ -60,7 +60,7 @@ app.on('ready', function() {
 
 function registerLocalShortcut(accelerator, window, callback) {
 	window.on('focus', function() {
-		globalShortcut.register(accelerator, callback);	
+		globalShortcut.register(accelerator, callback);
 	});
 
 	window.on('blur', function() {
