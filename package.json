@@ -15,8 +15,8 @@
     "clean:win": "rm -rf ./dist/win",
 
     "build": "npm run clean && npm run build:osx && npm run build:win",
-    "build:osx": "npm run clean:osx && electron-packager . \"Google Music Client\" --out=dist/osx --platform=darwin --arch=x64 --version=0.34.0 --icon=assets/icon.icns --ignore=dist/ --ignore=electron-*",
-    "build:win": "npm run clean:win && electron-packager . \"Google Music Client\" --out=dist/win --platform=win32 --arch=ia32 --version=0.34.0 --icon=assets/icon.ico --ignore=dist/ --ignore=electron-*",
+    "build:osx": "npm run clean:osx && electron-packager . \"Google Music Client\" --out=dist/osx --platform=darwin --arch=x64 --version=0.34.2 --icon=assets/icon.icns --ignore=dist/ --ignore=electron-*",
+    "build:win": "npm run clean:win && electron-packager . \"Google Music Client\" --out=dist/win --platform=win32 --arch=ia32 --version=0.34.2 --icon=assets/icon.ico --ignore=dist/ --ignore=electron-*",
 
     "pack": "npm run pack:osx && npm run pack:win",
     "pack:osx": "npm run build:osx && electron-builder \"dist/osx/Google Music Client-darwin-x64/Google Music Client.app\" --platform=osx --out=\"dist/osx\" --config=packager.json",
