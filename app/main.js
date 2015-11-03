@@ -59,6 +59,8 @@ app.on('ready', function() {
 });
 
 function registerLocalShortcut(accelerator, window, callback) {
+	globalShortcut.register(accelerator, callback);
+
 	window.on('focus', function() {
 		globalShortcut.register(accelerator, callback);
 	});
