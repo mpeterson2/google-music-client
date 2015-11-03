@@ -8,6 +8,8 @@
     "node-localstorage": "^0.6.0"
   },
   "scripts": {
+    "start": "electron .",
+
     "clean": "rm -rf ./dist",
     "clean:osx": "rm -rf ./dist/osx",
     "clean:win": "rm -rf ./dist/win",
@@ -22,6 +24,7 @@
   },
   "devDependencies": {
     "electron-builder": "^2.0.2",
-    "electron-packager": "^5.1.0"
+    "electron-packager": "^5.1.0",
+    "electron-prebuilt": "^0.34.2"
   }
 }
