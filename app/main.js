@@ -17,22 +17,23 @@ app.on('ready', function() {
 
 	mainWindow.loadUrl('file://' + __dirname + '/index.html');
 
-	mainWindow.on('close', function() {
+	app.on('window-all-closed', function() {
 		var newBounds = mainWindow.getBounds();
 		fs.writeFileSync(boundsPath, JSON.stringify(newBounds));
-		mainWindow.webContents.send('close');
+
 		mainWindow = null;
+		app.quit();
 	});
 
-	globalShortcut.register("MediaNextTrack", function() {
+	var s = globalShortcut.register('MediaNextTrack', function() {
 		mainWindow.webContents.send('next-track');
 	});
 
-	globalShortcut.register("MediaPreviousTrack", function() {
+	globalShortcut.register('MediaPreviousTrack', function() {
 		mainWindow.webContents.send('previous-track');
 	});
 
-	globalShortcut.register("MediaPlayPause", function() {
+	globalShortcut.register('MediaPlayPause', function() {
 		mainWindow.webContents.send('play-pause');
 	});
 

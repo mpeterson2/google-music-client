@@ -42,7 +42,7 @@ $(document).ready(function() {
 		webview.goForward();
 	});
 
-	ipc.on('close', function() {
+	$(webview).on('load-commit', function() {
 		var url = webview.getUrl();
 		localStorage.url = url;
 	});
