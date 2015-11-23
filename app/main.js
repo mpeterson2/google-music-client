@@ -6,7 +6,7 @@ var fs = require('fs');
 
 app.on('ready', function() {
 	var boundsPath = path.join(app.getDataPath() + '/bounds.json');
-	var bounds = getBounds();
+	var bounds = getSavedBounds();
 	var mainWindow = new BrowserWindow({
 		x: bounds.x,
 		y: bounds.y,
@@ -17,15 +17,22 @@ app.on('ready', function() {
 
 	mainWindow.loadUrl('file://' + __dirname + '/index.html');
 
-	app.on('window-all-closed', function() {
+	mainWindow.webContents.on('did-finish-load', function() {
+		//mainWindow.webContents.openDevTools();
+	});
+
+	mainWindow.on('close', function() {
 		var newBounds = mainWindow.getBounds();
 		fs.writeFileSync(boundsPath, JSON.stringify(newBounds));
 
 		mainWindow = null;
+	});
+
+	app.on('window-all-closed', function() {
 		app.quit();
 	});
 
-	var s = globalShortcut.register('MediaNextTrack', function() {
+	globalShortcut.register('MediaNextTrack', function() {
 		mainWindow.webContents.send('next-track');
 	});
 
@@ -49,7 +56,7 @@ app.on('ready', function() {
 		mainWindow.webContents.send('go-forward');
 	});
 
-	function getBounds() {
+	function getSavedBounds() {
 		try {
 			var data = JSON.parse(fs.readFileSync(boundsPath, 'utf8'));
 			return data;

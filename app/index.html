@@ -42,6 +42,10 @@ $(document).ready(function() {
 		webview.goForward();
 	});
 
+	ipc.on('print', function(thing) {
+		console.log(thing);
+	});
+
 	$(webview).on('load-commit', function() {
 		var url = webview.getUrl();
 		localStorage.url = url;
