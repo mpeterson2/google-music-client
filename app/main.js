@@ -17,10 +17,6 @@ app.on('ready', function() {
 
 	mainWindow.loadUrl('file://' + __dirname + '/index.html');
 
-	mainWindow.webContents.on('did-finish-load', function() {
-		//mainWindow.webContents.openDevTools();
-	});
-
 	mainWindow.on('close', function() {
 		var newBounds = mainWindow.getBounds();
 		fs.writeFileSync(boundsPath, JSON.stringify(newBounds));
