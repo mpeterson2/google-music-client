@@ -1,7 +1,7 @@
 {
   "osx" : {
     "title": "Google Music Client",
-    "background": "assets/icon.png",
+    "background": "assets/bg.png",
     "icon": "assets/icon.icns",
     "icon-size": 80,
     "contents": [
