@@ -1,55 +1,66 @@
-<style>
-	body {
-		margin: 0;
-	}
-</style>
+<html>
+<head>
+	<title>Google Music</title>
 
-<webview id="webview" src="https://play.google.com/music/listen" preload="hook.js"></webview>
+	<style>
+		body {
+			margin: 0;
+		}
+	</style>
 
-<script>
-var ipc = require('ipc');
-window.$ = window.jQuery = require('jquery');
+</head>
 
-$(document).ready(function() {
-	var webview = document.querySelector('#webview');
+<body>
 
-	var url = localStorage.url;
-	if (url !== undefined) {
-		webview.src = url;
-	}
+	<webview id="webview" src="https://play.google.com/music/listen" preload="hook.js"></webview>
 
-	ipc.on('play-pause', function() {
-		webview.send('play-pause');
+	<script>
+	var ipc = require('ipc');
+	window.$ = window.jQuery = require('jquery');
+
+	$(document).ready(function() {
+		var webview = document.querySelector('#webview');
+
+		var url = localStorage.url;
+		if (url !== undefined) {
+			webview.src = url;
+		}
+
+		ipc.on('play-pause', function() {
+			webview.send('play-pause');
+		});
+
+		ipc.on('next-track', function() {
+			webview.send('next-track');
+		});
+
+		ipc.on('previous-track', function() {
+			webview.send('previous-track');
+		});
+
+		ipc.on('reload', function() {
+			webview.reload();
+		});
+
+		ipc.on('go-back', function() {
+			webview.goBack();
+		});
+
+		ipc.on('go-forward', function() {
+			webview.goForward();
+		});
+
+		ipc.on('print', function(thing) {
+			console.log(thing);
+		});
+
+		$(webview).on('load-commit', function() {
+			var url = webview.getUrl();
+			localStorage.url = url;
+		});
 	});
 
-	ipc.on('next-track', function() {
-		webview.send('next-track');
-	});
+	</script>
 
-	ipc.on('previous-track', function() {
-		webview.send('previous-track');
-	});
-
-	ipc.on('reload', function() {
-		webview.reload();
-	});
-
-	ipc.on('go-back', function() {
-		webview.goBack();
-	});
-
-	ipc.on('go-forward', function() {
-		webview.goForward();
-	});
-
-	ipc.on('print', function(thing) {
-		console.log(thing);
-	});
-
-	$(webview).on('load-commit', function() {
-		var url = webview.getUrl();
-		localStorage.url = url;
-	});
-});
-
-</script>
+</body>
+</html>

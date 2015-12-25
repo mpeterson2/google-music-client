@@ -15,10 +15,16 @@ app.on('ready', function() {
 		'title-bar-style': 'hidden'
 	});
 
+	if (bounds.isMaximized) {
+		mainWindow.maximize();
+	}
+
 	mainWindow.loadUrl('file://' + __dirname + '/index.html');
 
 	mainWindow.on('close', function() {
 		var newBounds = mainWindow.getBounds();
+		newBounds.isMaximized = mainWindow.isMaximized();
+
 		fs.writeFileSync(boundsPath, JSON.stringify(newBounds));
 
 		mainWindow = null;
